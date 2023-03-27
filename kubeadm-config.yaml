@@ -1,0 +1,18 @@
+kind: InitConfiguration
+apiVersion: kubeadm.k8s.io/v1beta3
+nodeRegistration:
+  criSocket: unix:///run/containerd/containerd.sock
+---
+kind: ClusterConfiguration
+apiVersion: kubeadm.k8s.io/v1beta3
+apiServer:
+  certSANs: # --apiserver-cert-extra-sans
+  - "127.0.0.1"
+kubernetesVersion: ${K8S_VERSION}
+imageRepository: ${IMAGE_REPO}
+networking:
+  podSubnet: "10.244.0.0/16" # --pod-network-cidr
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: systemd
